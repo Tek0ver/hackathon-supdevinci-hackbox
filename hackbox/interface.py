@@ -19,7 +19,7 @@ st.title("Test(s) à faire:")
 
 wanted_tests = [] # list of tuples like (test_id, [parameters])
 
-# Display the list of tests and select wanted tests
+# Displays the list of tests and select wanted tests
 for test in tests:
     current_params = []
     current_test = []
@@ -39,20 +39,13 @@ for test in tests:
     if current_test:
         wanted_tests.append((current_test, current_params))
 
+# Displays the button to start tests and manages the tests
 if st.session_state['running_tests'] is False:
-
     start_tests_button = st.button("Lancer le test")
     if wanted_tests and start_tests_button:
         st.session_state['running_tests'] = True
-
 else:
-
-    st.info("Test lancé.")
-
-    print(wanted_tests)
-
-    st.write(st.session_state['running_tests'])
-
-    start_tests(wanted_tests)
-
-    st.success('done')
+    st.info("Tests lancés.")
+    with st.spinner('Tests en cours...'):
+        start_tests(wanted_tests)
+    st.success('Tests terminés.')
