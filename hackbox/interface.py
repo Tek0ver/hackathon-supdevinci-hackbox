@@ -39,9 +39,13 @@ for test in tests:
     if current_test:
         wanted_tests.append((current_test, current_params))
 
-if st.button("Lancer le test"):
+if st.session_state['running_tests'] is False:
 
-    st.session_state['running_tests'] += 1
+    start_tests_button = st.button("Lancer le test")
+    if wanted_tests and start_tests_button:
+        st.session_state['running_tests'] = True
+
+else:
 
     st.info("Test lancé.")
 
