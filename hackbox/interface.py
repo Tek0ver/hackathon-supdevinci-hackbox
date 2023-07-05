@@ -13,7 +13,7 @@ def start_tests(wanted_tests):
                 print(f"Test {test['id']} ended.")
 
 if 'running_tests' not in st.session_state:
-    st.session_state['running_tests'] = 1
+    st.session_state['running_tests'] = False
 
 st.title("Test(s) à faire:")
 
@@ -33,7 +33,7 @@ for test in tests:
             if parameter[1] == 'int':
                 current_params.append(int(st.number_input(parameter[0], value=parameter[2])))
             elif parameter[1] == 'str':
-                pass
+                current_params.append(str(st.text_input(parameter[0], value=parameter[2])))
     
     if current_test:
         wanted_tests.append((current_test, current_params))
