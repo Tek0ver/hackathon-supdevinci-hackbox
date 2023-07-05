@@ -23,12 +23,13 @@ wanted_tests = [] # list of tuples like (test_id, [parameters])
 for test in tests:
     current_params = []
     current_test = []
-    if st.checkbox(test["title"]):
+    checkbox = st.checkbox(test["title"])
+    if checkbox:
         current_test = test["id"]
     if test["description"]:
         with st.caption(f"Description du test \"{test['title']}\"."):
             st.info(test["description"])
-    if test['parameter']:
+    if test['parameter'] and checkbox:
         for parameter in test['parameter']:
             if parameter[1] == 'int':
                 current_params.append(int(st.number_input(parameter[0], value=parameter[2])))
