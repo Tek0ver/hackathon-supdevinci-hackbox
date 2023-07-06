@@ -5,7 +5,32 @@ from scripts.foo_count import foo_count
 test_mode = True
 
 if not test_mode:
-    pass
+
+    import main as scripts
+
+    tests = [
+        {
+            "id": 1,
+            "title": "Récupération des ips",
+            "description": "",
+            "command": scripts.scan,
+            "parameter": []
+        },
+        {
+            "id": 2,
+            "title": "Scan des ports",
+            "description": "",
+            "command": scripts.recon,
+            "parameter": []
+        },
+        {
+            "id": 3,
+            "title": "Recherche des CVE",
+            "description": "",
+            "command": scripts.better_scan,
+            "parameter": []
+        }
+    ]
 
 else:
 

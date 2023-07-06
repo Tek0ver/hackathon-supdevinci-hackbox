@@ -40,12 +40,14 @@ for test in tests:
         wanted_tests.append((current_test, current_params))
 
 # Displays the button to start tests and manages the tests
-if st.session_state['running_tests'] is False:
-    start_tests_button = st.button("Lancer le test")
-    if wanted_tests and start_tests_button:
+if st.session_state['running_tests'] is False and wanted_tests:
+    if st.button("Lancer le test"):
         st.session_state['running_tests'] = True
-else:
+        st.experimental_rerun()
+elif st.session_state['running_tests']:
     st.info("Tests lancés.")
     with st.spinner('Tests en cours...'):
         start_tests(wanted_tests)
     st.success('Tests terminés.')
+else:
+    pass
