@@ -1,19 +1,25 @@
 import streamlit as st
 from list_tests import *
+from settings import *
 
 def start_tests(wanted_tests):
     for id, params in wanted_tests:
         for test in tests:
             if test["id"] == id:
-                print(f"Starting test {test['id']}.")
+                print(f"==============Starting test {test['id']}.==============")
                 if params:
+                    print(f"[LOG] Lancement du test avec les parametres suivants {params}")
                     test["command"](*params)
                 else:
                     test["command"]()
-                print(f"Test {test['id']} ended.")
+                print(f"================Test {test['id']} ended.================")
 
 if 'running_tests' not in st.session_state:
     st.session_state['running_tests'] = False
+if 'tested_once' not in st.session_state:
+    st.session_state['tested_once'] = False
+
+st.title(f"Client : {DOMAIN}, ID : {ID_CLIENT}")
 
 st.title("Test(s) à faire:")
 
@@ -40,12 +46,16 @@ for test in tests:
         wanted_tests.append((current_test, current_params))
 
 # Displays the button to start tests and manages the tests
-if st.session_state['running_tests'] is False:
-    start_tests_button = st.button("Lancer le test")
-    if wanted_tests and start_tests_button:
+if st.session_state['running_tests'] is False and wanted_tests:
+    if st.button("Lancer le test"):
         st.session_state['running_tests'] = True
-else:
+        st.experimental_rerun()
+elif st.session_state['running_tests']:
     st.info("Tests lancés.")
-    with st.spinner('Tests en cours...'):
-        start_tests(wanted_tests)
+    with st.spinner("Tests en cours..."):
+        if not st.session_state['tested_once']:
+            st.session_state['tested_once'] = True
+            start_tests(wanted_tests)
     st.success('Tests terminés.')
+else:
+    pass
