@@ -51,6 +51,7 @@ elif st.session_state['running_tests']:
     st.info("Tests lancés.")
     with st.spinner("Tests en cours..."):
         if not st.session_state['tested_once']:
+            st.session_state['tested_once'] = True
             start_tests(wanted_tests)
     st.success('Tests terminés.')
 else:
