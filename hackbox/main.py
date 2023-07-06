@@ -26,7 +26,7 @@ def scan(adresse_ip : str=None):
         id_client = input("Entrez l'ID de l'entreprise' : ")
     else:
         id_client = ID_CLIENT
-        
+
     scanner_ports(request, mydb, adresse_ip, domain, id_client)
 
 def better_scan():
@@ -40,7 +40,15 @@ def better_scan():
 
 def recon_subnet():
 
-    domain = input("Entrez un domaine : ")
-    request.get_client(mydb)
-    id_client = input("Entrez l'ID de l'entreprise' : ")
+    if DOMAIN is None:
+        domain = input("Entrez un domaine : ")
+    else:
+        domain = DOMAIN
+
+    if ID_CLIENT is None:    
+        request.get_client(mydb)
+        id_client = input("Entrez l'ID de l'entreprise' : ")
+    else:
+        id_client = ID_CLIENT
+        
     recon(request, mydb, domain, id_client)

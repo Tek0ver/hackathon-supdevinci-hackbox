@@ -18,9 +18,9 @@ if not test_mode:
         },
         {
             "id": 2,
-            "title": "Scan des ports",
+            "title": "Scan du réseau pour scanner toutes les IPs",
             "description": "",
-            "command": scripts.recon,
+            "command": scripts.recon_subnet,
             "parameter": []
         },
         {
