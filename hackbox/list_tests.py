@@ -2,7 +2,7 @@ from scripts.foo_ip_collect import foo_ip_collect
 from scripts.foo_scan_open_ports import foo_scan_open_ports
 from scripts.foo_count import foo_count
 
-test_mode = True
+test_mode = False
 
 if not test_mode:
 
@@ -11,10 +11,10 @@ if not test_mode:
     tests = [
         {
             "id": 1,
-            "title": "Récupération des ips",
+            "title": "Scan léger d'une IP",
             "description": "",
             "command": scripts.scan,
-            "parameter": []
+            "parameter": [('IP à scanner (exemple: 15.111.5.48)', 'str', "0.0.0.0")]
         },
         {
             "id": 2,
