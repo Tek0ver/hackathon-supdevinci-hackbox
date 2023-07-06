@@ -1,5 +1,6 @@
 import streamlit as st
 from list_tests import *
+from settings import *
 
 def start_tests(wanted_tests):
     for id, params in wanted_tests:
@@ -17,6 +18,8 @@ if 'running_tests' not in st.session_state:
     st.session_state['running_tests'] = False
 if 'tested_once' not in st.session_state:
     st.session_state['tested_once'] = False
+
+st.title(f"Client : {DOMAIN}, ID : {ID_CLIENT}")
 
 st.title("Test(s) à faire:")
 
