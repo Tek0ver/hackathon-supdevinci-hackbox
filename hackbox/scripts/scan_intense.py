@@ -14,7 +14,7 @@ def active_scan(request, mydb, ips, domain, id_client):
 
         # Effectuez l'analyse des ports sur l'IP spécifiée
         try:
-            scanner.scan(ip, arguments='-sS -p-', timeout=300)
+            scanner.scan(ip, arguments='-sS', timeout=300)
         except:
             pass
 
@@ -91,10 +91,16 @@ def active_scan(request, mydb, ips, domain, id_client):
                                             name_cve = cve
                                             # name_cve.append(cve["cve"]["CVE_data_meta"]["ID"])
                                             # Incrémente le tableau avec les informations des ports avec CVE
-                                            result_list.append({'port': active_port, 'protocole': info["name"], 'service': info["service"], 'version': info["version"], 'cve': name_cve, 'cvss': cvss})
-                                            print(f'Port : {active_port}, protocole : {info["name"]}, service : {info["service"]}, version: {info["version"]}, cve : {name_cve}, cvss : {cvss}')
+                                        result_list.append({'port': active_port, 'protocole': info["name"], 'service': info["service"], 'version': info["version"], 'cve': name_cve, 'cvss': cvss})
+                                        print(f'Port : {active_port}, protocole : {info["name"]}, service : {info["service"]}, version: {info["version"]}, cve : {name_cve}, cvss : {cvss}')
                                 else:
                                     error_api = True
+                            else:
+                                result_list.append({'port': active_port, 'protocole': info["name"], 'service': info["service"], 'version': info["version"], 'cve': name_cve, 'cvss': cvss})
+                                print(f'Port: {active_port}, protocole : {info["name"]}, service : {info["service"]}, version: {info["version"]}, cve : {name_cve}, cvss : {cvss}')
+                        else:
+                            result_list.append({'port': active_port, 'protocole': info["name"], 'service': info["service"], 'version': info["version"], 'cve': name_cve, 'cvss': cvss})
+                            print(f'Port: {active_port}, protocole : {info["name"]}, service : {info["service"]}, version: {info["version"]}, cve : {name_cve}, cvss : {cvss}')
                     else:
                         # Incrémente le tableau avec les informations des ports sans CVE
                         result_list.append({'port': active_port, 'protocole': info["name"], 'service': info["service"], 'version': info["version"], 'cve': name_cve, 'cvss': cvss})
@@ -108,9 +114,9 @@ def active_scan(request, mydb, ips, domain, id_client):
 
                 #print(json_file)
 
-                #push_machine = request.check_machine(mydb, id_client, ip, domain)
-                #machine_id = push_machine
-                #request.push_test(mydb, "nmap", json_file, machine_id)
+                push_machine = request.check_machine(mydb, id_client, ip, domain)
+                machine_id = push_machine
+                request.push_test(mydb, "nmap", json_file, machine_id)
 
                 # Affiche un message en cas d'erreur pour l'API de NVD (check CVEs)
                 if error_api == True:
