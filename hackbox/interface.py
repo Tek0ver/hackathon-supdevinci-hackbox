@@ -15,6 +15,8 @@ def start_tests(wanted_tests):
 
 if 'running_tests' not in st.session_state:
     st.session_state['running_tests'] = False
+if 'tested_once' not in st.session_state:
+    st.session_state['tested_once'] = False
 
 st.title("Test(s) à faire:")
 
@@ -48,7 +50,8 @@ if st.session_state['running_tests'] is False and wanted_tests:
 elif st.session_state['running_tests']:
     st.info("Tests lancés.")
     with st.spinner("Tests en cours..."):
-        start_tests(wanted_tests)
+        if not st.session_state['tested_once']:
+            start_tests(wanted_tests)
     st.success('Tests terminés.')
 else:
     pass
