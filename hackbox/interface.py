@@ -7,19 +7,22 @@ def start_tests(wanted_tests):
         for test in tests:
             if test["id"] == id:
                 print(f"==============Starting test {test['id']}.==============")
-                if params:
-                    print(f"[LOG] Lancement du test avec les parametres suivants {params}")
-                    test["command"](*params)
-                else:
-                    test["command"]()
-                print(f"================Test {test['id']} ended.================")
+                try:
+                    if params:
+                        print(f"[LOG] Lancement du test avec les parametres suivants {params}")
+                        test["command"](*params)
+                    else:
+                        test["command"]()
+                    print(f"================Test {test['id']} ended.================")
+                except:
+                    st.error(f"Echec du test.")
 
 if 'running_tests' not in st.session_state:
     st.session_state['running_tests'] = False
 if 'tested_once' not in st.session_state:
     st.session_state['tested_once'] = False
 
-st.title(f"Client : {DOMAIN}, ID : {ID_CLIENT}")
+st.write(f"Client : {DOMAIN} (ID : {ID_CLIENT})")
 
 st.title("Test(s) à faire:")
 
